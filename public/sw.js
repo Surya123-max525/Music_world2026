@@ -1,8 +1,9 @@
 const CACHE_NAME = 'masti-music-v1';
-const APP_SHELL = ['/', '/manifest.json', '/icon.svg'];
+const scopeUrl = new URL(self.registration.scope);
+const appShell = ['', 'manifest.json', 'icon.svg'].map((path) => new URL(path, scopeUrl).toString());
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)));
+  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(appShell)));
   self.skipWaiting();
 });
 
@@ -13,5 +14,5 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
-  event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request).catch(() => caches.match('/'))));
+  event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request).catch(() => caches.match(scopeUrl.toString()))));
 });
