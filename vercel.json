@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    { "source": "/health", "destination": "/api/health" },
+    { "source": "/search", "destination": "/api/search" },
+    { "source": "/stream/:id", "destination": "/api/stream/:id" },
+    { "source": "/playlist/:id", "destination": "/api/playlist/:id" },
+    { "source": "/trending", "destination": "/api/trending" },
+    { "source": "/suggestions", "destination": "/api/suggestions" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
